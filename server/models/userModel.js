@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema(
                 endYear: Number
             }
         ],
-        connetions: [
+        connections: [
             {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User"
