@@ -1,5 +1,5 @@
 export function createWelcomeEmailTemplate(name, profileUrl) {
-    return `
+  return `
   <!DOCTYPE html>
   <html lang="en">
   <head>

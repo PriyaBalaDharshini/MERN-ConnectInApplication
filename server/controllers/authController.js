@@ -54,11 +54,11 @@ export const signup = async (req, res) => {
         const profileUrl = `${process.env.CLIENT_URL}/profile/${user.username}`
         // todo: welcome mail
 
-        try {
-            await sendWelcomeEmail(user.name, user.email, profileUrl)
-        } catch (error) {
-            console.log("Error sending welcome email", error);
-        }
+        /*  try {
+             await sendWelcomeEmail(user.name, user.email, profileUrl)
+         } catch (error) {
+             console.log("Error sending welcome email", error);
+         } */
 
 
 
@@ -69,5 +69,50 @@ export const signup = async (req, res) => {
 }
 
 
-export const login = async (req, res) => { }
-export const logout = async (req, res) => { }
+export const login = async (req, res) => {
+
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({ message: "All feilds are required" })
+        }
+
+        const user = await userModel.findOne({ email })
+        if (!user) {
+            return res.status(400).json({ message: "User not found. Please register" })
+        }
+        const passwordMatch = await bcrypt.compare(password, user.password)
+
+        if (!passwordMatch) {
+            return res.status(400).json({ message: "Incorrect Password" })
+        }
+
+        let token;
+        try {
+            token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, { expiresIn: "15d" });
+        } catch (err) {
+            return res.status(500).json({ message: "Token generation failed." });
+        }
+
+        // Set JWT as a cookie
+        res.cookie("jwt-token", token, {
+            httpOnly: true, //prevent XSS attact
+            maxAge: 15 * 24 * 60 * 60 * 1000,
+            sameSite: "strict", //prevent CSRF attack,
+            secure: process.env.NODE_ENV === "production", //protects man-in-middle attack
+        })
+
+        res.status(201).json({ message: "Login Successfull" })
+
+    } catch (error) {
+        console.log("Error while login:", error.message);
+        res.status(500).json({ message: "Internal Server Error" })
+    }
+}
+
+export const logout = async (req, res) => {
+    res.clearCookie("jwt-token")
+
+    res.json({ message: "Loggedout successfully" })
+}
