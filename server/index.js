@@ -3,6 +3,7 @@ import cors from 'cors'
 import authRoutes from "./routes/authRoutes.js"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
+import cookieParser from "cookie-parser"
 
 dotenv.config()
 
@@ -12,6 +13,7 @@ const DB = process.env.DB_URL
 
 app.use(cors())
 app.use(express.json())
+app.use(cookieParser())
 
 app.use("/auth", authRoutes)
 
