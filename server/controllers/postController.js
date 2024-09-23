@@ -96,12 +96,47 @@ export const createComment = async (req, res) => {
             { new: true }
         ).populate("author", "name email username headline profilePicture");
 
-
-
-
         res.status(200).json(post);
     } catch (error) {
         console.log("Error in while creating your comment", error.message);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 }
+
+export const editPost = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const { content, image } = req.body;
+        const userId = req.user._id;
+
+        const post = await PostModel.findById(postId);
+
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        if (post.author.toString() !== userId.toString()) {
+            return res.status(403).json({ message: "You are not authorized to edit this post" });
+        }
+
+        if (image) {
+           
+            if (post.image) {
+                await cloudinary.uploader.destroy(post.image.split("/").pop().split(".")[0]);
+            }
+
+            const imageResult = await cloudinary.uploader.upload(image);
+            post.image = imageResult.secure_url;
+        }
+
+        if (content) {
+            post.content = content;
+        }
+
+        await post.save();
+        res.status(200).json(post);
+    } catch (error) {
+        console.log("Error in editing post:", error.message);
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+};
