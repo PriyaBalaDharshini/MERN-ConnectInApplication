@@ -1,6 +1,7 @@
 import express from "express"
 import authRoutes from "./routes/authRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
+import postRoutes from "./routes/postRoutes.js"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import cookieParser from "cookie-parser"
@@ -17,6 +18,7 @@ app.use(cookieParser())
 
 app.use("/auth", authRoutes)
 app.use("/user", userRoutes)
+app.use("/post", postRoutes)
 
 
 app.get("/", (req, res) => {
