@@ -51,7 +51,7 @@ export const signup = async (req, res) => {
 
         res.status(201).json({ message: "User created successfully" })
 
-        const profileUrl = `${process.env.CLIENT_URL}/profile/${user.username}`
+        /* const profileUrl = `${process.env.CLIENT_URL}/profile/${user.username}` */
         // todo: welcome mail
 
         /*  try {
