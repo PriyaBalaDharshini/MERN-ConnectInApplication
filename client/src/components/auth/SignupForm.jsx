@@ -22,12 +22,15 @@ const SignupForm = () => {
             /* const errorMessage = error.response?.data?.message || "Something went wrong"; */
             toast.error(error.response?.data?.message || "Something went wrong");
         }
-
     })
 
     const handleSignup = (e) => {
         e.preventDefault()
         signupMutation({ name, username, email, password })
+        setName("")
+        setUsername("")
+        setPassword("")
+        setEmail("")
     }
 
     return (
