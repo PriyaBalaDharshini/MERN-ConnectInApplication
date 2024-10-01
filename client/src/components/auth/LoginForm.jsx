@@ -29,8 +29,7 @@ const LoginForm = () => {
     const handleLogin = (e) => {
         e.preventDefault()
         loginMutation({ email, password })
-        setPassword("")
-        setEmail("")
+
     }
 
     return (
