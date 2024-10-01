@@ -9,12 +9,12 @@ import { useQuery } from '@tanstack/react-query'
 import { axiosInstance } from './library/axios'
 
 const App = () => {
-  const { data: authUser } = useQuery({  //for getting current signedup user
+  const { data: authUser, isLoading } = useQuery({
     queryKey: ['authUser'],
     queryFn: async () => {
       try {
         const res = await axiosInstance.get("/auth/me")
-        console.log(res.data);
+        //console.log(res.data);
         return res.data;
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -25,7 +25,7 @@ const App = () => {
       }
     }
   });
-  console.log(authUser);
+  if (isLoading) return null;
 
   return (
     <Layout>

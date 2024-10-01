@@ -10,7 +10,7 @@ const SignupPage = () => {
 
             {/* logo and quote */}
             <div className='sm:mx-auto sm:w-full sm:max-w-md p-2 rounded-sm' >
-                <img className='mx-auto h-auto w-auto rounded-2xl ' src='/connectin.png' alt="ConnectIn" />
+                <img className='mx-auto h-auto w-auto rounded-2xl ' src='/connectin.jpeg' alt="ConnectIn" />
                 <h3 className='text-center text-3xl font-extrabold text-gray-950  mt-6 '>Accelerate Your Professional Growth</h3>
             </div>
             {/* Form wrapper */}
