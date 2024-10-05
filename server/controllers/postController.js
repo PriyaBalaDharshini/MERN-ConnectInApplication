@@ -19,21 +19,22 @@ export const createPost = async (req, res) => {
     try {
         const { image, content } = req.body;
         let newPost;
+
         if (image) {
             const imageResult = await cloudinary.uploader.upload(image)
-            newPost = new PostModel.create({
+            newPost = await PostModel.create({
                 author: req.user._id,
                 content,
                 image: imageResult.secure_url
-            })
+            });
         } else {
-            newPost = new PostModel.create({
+            newPost = await PostModel.create({
                 author: req.user._id,
                 content,
-            })
+            });
         }
-        await newPost.save()
-        res.status(201).json(newPost)
+
+        res.status(201).json(newPost);
 
     } catch (error) {
         console.log("Error in creating new post:", error.message);
@@ -120,7 +121,7 @@ export const editPost = async (req, res) => {
         }
 
         if (image) {
-           
+
             if (post.image) {
                 await cloudinary.uploader.destroy(post.image.split("/").pop().split(".")[0]);
             }

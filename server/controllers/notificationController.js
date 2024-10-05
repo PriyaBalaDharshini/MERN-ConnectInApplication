@@ -1,6 +1,6 @@
 import NotificationModel from "../models/notificationModel.js";
 
-export const getUserNotifications = async () => {
+export const getUserNotifications = async (req, res) => {
     try {
         const notifications = await NotificationModel.find({ recipient: req.user._id })
             .sort({ createdAt: -1 })

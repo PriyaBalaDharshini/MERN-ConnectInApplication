@@ -13,7 +13,7 @@ export const getSuggestedConnections = async (req, res) => {
                 $nin: currentUser.connections // Exclude already connected users
             }
         }).select("name username profilePicture headline")
-            .limit(2);
+            .limit(3);
 
         return res.json(suggestUser); // Return after response to avoid continuing
 
