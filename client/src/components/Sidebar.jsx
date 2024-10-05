@@ -25,7 +25,7 @@ const Sidebar = ({ user }) => {
                     <p className='text-blue-600 mt-2'>{user.headline}</p>
                     <p className='text-info text-xs mt-2'>{user.connections.length} connections</p>
                 </div>
-                <div className='border-t border-base-100 mt-4'>
+                <div className='border-t border-neutral-950 mt-4'>
                     <nav className='p-4'>
                         <ul className='space-y-2'>
                             <li>

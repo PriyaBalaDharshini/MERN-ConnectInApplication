@@ -2,6 +2,7 @@ import React from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { axiosInstance } from '../library/axios'
 import Sidebar from '../components/Sidebar';
+import PostCreation from '../components/PostCreation';
 
 const HomePage = () => {
 
@@ -33,8 +34,10 @@ const HomePage = () => {
                 <Sidebar user={authUser} />
             </div>
 
-
             {/* Posts */}
+            <div className='col-span-1 lg:col-span-2 order-first lg:order-none '>
+                <PostCreation user={authUser} />
+            </div>
             {/* Recomended users */}
 
         </div>
